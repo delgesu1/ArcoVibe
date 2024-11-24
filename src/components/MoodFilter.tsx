@@ -14,27 +14,29 @@ interface MoodFilterProps {
 
 // Group names for your categories
 const categoryNames = {
-  1: 'Joyful & Bright',
-  2: 'Peaceful & Calm',
-  3: 'Contemplative',
-  4: 'Dramatic & Intense',
-  5: 'Heroic & Grand',
-  7: 'Passionate & Intimate',
-  8: 'Mystical & Ethereal',
-  9: 'Powerful & Dynamic',
-  10: 'Natural & Temporal'
+  '1': 'Joyful & Bright',
+  '2': 'Peaceful & Calm',
+  '3': 'Contemplative',
+  '4': 'Dramatic & Intense',
+  '5': 'Heroic & Grand',
+  '7': 'Passionate & Intimate',
+  '8': 'Mystical & Ethereal',
+  '9': 'Powerful & Dynamic',
+  '10': 'Natural & Temporal'
 } as const;
+
+type CategoryKey = keyof typeof categoryNames;
 
 export function MoodFilter({ moods, selectedMoods, onMoodToggle, handleCategoryShuffle }: MoodFilterProps) {
   const isAtLimit = selectedMoods.size >= 3;
 
   // Group moods by category
   const moodsByCategory = moods.reduce((acc, mood) => {
-    const category = getMoodCategory(mood);
+    const category = String(getMoodCategory(mood)) as CategoryKey;
     if (!acc[category]) acc[category] = [];
     acc[category].push(mood);
     return acc;
-  }, {} as Record<number, string[]>);
+  }, {} as Record<CategoryKey, string[]>);
 
   return (
     <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b dark:border-neutral-800/50 dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)] dark:bg-neutral-900/50">
@@ -58,13 +60,13 @@ export function MoodFilter({ moods, selectedMoods, onMoodToggle, handleCategoryS
                       className={`
                         group relative
                         px-4 py-2 rounded-lg font-medium
-                        bg-gradient-to-r ${categoryColors[category as unknown as keyof typeof categoryColors]}
+                        bg-gradient-to-r ${categoryColors[category as CategoryKey]}
                         text-white hover:opacity-90
                         transition-all duration-200
                         ${hasSelected ? 'ring-2 ring-white ring-opacity-50' : ''}
                       `}
                     >
-                      {categoryNames[category as keyof typeof categoryNames]}
+                      {categoryNames[category as CategoryKey]}
                       {hasSelected && (
                         <span className="ml-2 bg-white/20 rounded-full px-2 py-0.5 text-sm">
                           {selectedInCategory.length}
