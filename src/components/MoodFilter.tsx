@@ -10,6 +10,7 @@ interface MoodFilterProps {
   selectedMoods: Set<string>;
   onMoodToggle: (mood: string) => void;
   handleCategoryShuffle: (category: string) => void;
+  handleShuffleAll: () => void;
 }
 
 // Group names for your categories
@@ -27,7 +28,7 @@ const categoryNames = {
 
 type CategoryKey = keyof typeof categoryNames;
 
-export function MoodFilter({ moods, selectedMoods, onMoodToggle, handleCategoryShuffle }: MoodFilterProps) {
+export function MoodFilter({ moods, selectedMoods, onMoodToggle, handleCategoryShuffle, handleShuffleAll }: MoodFilterProps) {
   const isAtLimit = selectedMoods.size >= 3;
 
   // Group moods by category
@@ -150,6 +151,18 @@ export function MoodFilter({ moods, selectedMoods, onMoodToggle, handleCategoryS
             </div>
           );
         })}
+        {/* Shuffle All Button */}
+        <div className="flex flex-col gap-2">
+          <Button
+            variant="ghost"
+            size="lg"
+            onClick={handleShuffleAll}
+            className="w-full bg-white text-black hover:bg-gray-200 font-medium rounded-lg shadow-md transition-all duration-200"
+          >
+            <Shuffle className="h-4 w-4 mr-2" />
+            Shuffle All
+          </Button>
+        </div>
       </div>
     </div>
   );

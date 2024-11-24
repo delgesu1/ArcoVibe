@@ -50,6 +50,12 @@ function App() {
     console.log(randomVideo);
   };
 
+  const handleShuffleAll = () => {
+    const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+    // Handle showing the random video (perhaps using the same dialog as VideoCard)
+    console.log(randomVideo);
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground dark:bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] dark:from-neutral-800/40 dark:via-neutral-900/80 dark:to-neutral-950 dark:before:content-[''] dark:before:fixed dark:before:inset-0 dark:before:bg-[radial-gradient(circle_at_90%_10%,rgba(255,255,255,0.02),transparent_20%),radial-gradient(circle_at_10%_90%,rgba(255,255,255,0.02),transparent_20%)] dark:before:pointer-events-none">
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:border-neutral-800/50 dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)] dark:bg-neutral-900/50">
@@ -86,7 +92,8 @@ function App() {
           moods={moods}
           selectedMoods={selectedMoods}
           onMoodToggle={handleMoodToggle}
-          handleCategoryShuffle={handleCategoryShuffle} // Added missing prop
+          handleCategoryShuffle={handleCategoryShuffle}
+          handleShuffleAll={handleShuffleAll}
         />
         <VideoGrid videos={filteredVideos} />
       </main>
